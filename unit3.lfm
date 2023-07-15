@@ -28,4 +28,13 @@ object Form1: TForm1
     OnClick = Button1Click
     TabOrder = 1
   end
+  object Edit1: TEdit
+    Left = 130
+    Height = 33
+    Top = 251
+    Width = 492
+    OnEnter = Edit1Enter
+    TabOrder = 2
+    Text = 'Edit1'
+  end
 end

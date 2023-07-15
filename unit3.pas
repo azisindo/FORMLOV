@@ -15,8 +15,10 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button3: TButton;
+    Edit1: TEdit;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Edit1Enter(Sender: TObject);
     procedure HandleLOVResult(const Value: TStringList);
   private
   public
@@ -53,6 +55,51 @@ begin
 
 end;
 
+procedure TForm1.Edit1Enter(Sender: TObject);
+var
+  FrmLov:TFrmLov;
+  ButtonPos: TPoint;
+
+  Connect:Tconnect;
+  SqlLov :TZQuery;
+  //uses uconnect,Db,ZDataset;
+
+begin
+  Connect := TConnect.Create();
+  try
+    if Connect.Connect then
+    begin
+      //Sql Query
+      SqlLov :=Connect.ExecuteQuery('Select * from hrms.ms_forms');
+      //seting untuk nama kolom
+
+      if SqlLov<> Nil then
+      begin
+        //Menngunakan TDataSource yang telah ditambahkan
+        Connect.DataSource.DataSet := SqlLov ;
+
+        ButtonPos := Edit1.ClientToScreen(Point(0, 0));   //disesuaikan dengan objet yang akan di jadikan LOV nya
+        FrmLov    := TFrmLov.Create(Self);
+
+        try
+          //Judul LOV
+          FrmLov.Caption:='Lov Master Barang';
+          FrmLov.Left := ButtonPos.X;
+          FrmLov.Top  := ButtonPos.Y + Button3.Height;
+          FrmLov.LoadDataToDbGrid(Connect.DataSource);
+          FrmLov.OnSelectValues := @HandleLOVResult;
+          FrmLov.ShowModal;
+        finally
+          FrmLov.Free;
+        end;
+      end;
+    end;
+  finally
+    Connect.Free;
+  end;
+
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
 var
   FrmLov:TFrmLov;
@@ -82,8 +129,6 @@ begin
         try
           //Judul LOV
           FrmLov.Caption:='Lov Master Barang';
-
-
           FrmLov.Left := ButtonPos.X;
           FrmLov.Top  := ButtonPos.Y + Button3.Height;
           FrmLov.LoadDataToDbGrid(Connect.DataSource);
@@ -92,7 +137,6 @@ begin
         finally
           FrmLov.Free;
         end;
-
       end;
     end;
   finally
@@ -105,6 +149,7 @@ procedure TForm1.HandleLOVResult(const Value: TStringList);
 begin
   // Disini Anda dapat menggunakan nilai yang dipilih dari LOV
   ShowMessage('Nilai yang dipilih: ' + Value[0]);
+  edit1.Caption:=Value[0];
 end;
 
 
