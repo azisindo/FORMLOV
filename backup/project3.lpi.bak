@@ -26,6 +26,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="zcomponent"/>
+      </Item>
+      <Item>
         <PackageName Value="bgracontrols"/>
       </Item>
       <Item>
@@ -54,7 +57,7 @@
       <Unit>
         <Filename Value="..\LIB\ulov.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form2"/>
+        <ComponentName Value="FrmLov"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ULov"/>
       </Unit>

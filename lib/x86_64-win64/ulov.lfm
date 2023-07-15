@@ -9,44 +9,44 @@ object FrmLov: TFrmLov
   DesignTimePPI = 144
   object PnlAtas: TPanel
     Left = 0
-    Height = 75
+    Height = 50
     Top = 0
     Width = 617
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 75
+    ClientHeight = 50
     ClientWidth = 617
     TabOrder = 0
     object PnlEdLov: TPanel
       Left = 0
-      Height = 75
+      Height = 50
       Top = 0
       Width = 482
       Align = alClient
-      ClientHeight = 75
+      ClientHeight = 50
       ClientWidth = 482
       TabOrder = 0
       object EdCariLov: TEdit
-        Left = 12
+        Left = 4
         Height = 33
-        Top = 24
+        Top = 8
         Width = 452
         TabOrder = 0
       end
     end
     object PnlBtnLov: TPanel
       Left = 482
-      Height = 75
+      Height = 50
       Top = 0
       Width = 135
       Align = alRight
-      ClientHeight = 75
+      ClientHeight = 50
       ClientWidth = 135
       TabOrder = 1
       object BtnSearch: TBCMaterialDesignButton
-        Left = 12
-        Height = 50
-        Top = 16
+        Left = 16
+        Height = 40
+        Top = 8
         Width = 116
         TextFont = 'default'
         Caption = 'Search'
@@ -64,23 +64,24 @@ object FrmLov: TFrmLov
   end
   object PnlTengah: TPanel
     Left = 0
-    Height = 497
-    Top = 75
+    Height = 522
+    Top = 50
     Width = 617
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 497
+    ClientHeight = 522
     ClientWidth = 617
     TabOrder = 2
     object DbgLov: TDBGrid
       Left = 0
-      Height = 497
+      Height = 522
       Top = 0
       Width = 617
       Align = alClient
       Color = clWindow
       Columns = <>
       TabOrder = 0
+      OnDblClick = DbgLovDblClick
     end
   end
 end

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBGrids,
-  StdCtrls;
+  StdCtrls,uconnect,Db,ZDataset;
 
 type
 
@@ -17,11 +17,9 @@ type
     Button3: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
-    procedure HandleLOVResult(const Value: string);
+    procedure HandleLOVResult(const Value: TStringList);
   private
-
   public
-
   end;
 
 var
@@ -57,30 +55,58 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
-  //FormLOV: TFormLOV;
   FrmLov:TFrmLov;
-
   ButtonPos: TPoint;
-begin
-  ButtonPos := Button1.ClientToScreen(Point(0, 0));
-  FormLOV := TFrmLov.Create(Self);
 
+  Connect:Tconnect;
+  SqlLov :TZQuery;
+  //uses uconnect,Db,ZDataset;
+
+begin
+  Connect := TConnect.Create();
   try
-    FormLOV.Left := ButtonPos.X;
-    FormLOV.Top :=  ButtonPos.Y + Button3.Height;
-    FormLOV.ShowModal;
+    if Connect.Connect then
+    begin
+      //Sql Query
+      SqlLov :=Connect.ExecuteQuery('Select * from hrms.ms_forms');
+      //seting untuk nama kolom
+
+      if SqlLov<> Nil then
+      begin
+        //Menngunakan TDataSource yang telah ditambahkan
+        Connect.DataSource.DataSet := SqlLov ;
+
+        ButtonPos := Button1.ClientToScreen(Point(0, 0));
+        FrmLov    := TFrmLov.Create(Self);
+
+        try
+          //Judul LOV
+          FrmLov.Caption:='Lov Master Barang';
+
+
+          FrmLov.Left := ButtonPos.X;
+          FrmLov.Top  := ButtonPos.Y + Button3.Height;
+          FrmLov.LoadDataToDbGrid(Connect.DataSource);
+          FrmLov.OnSelectValues := @HandleLOVResult;
+          FrmLov.ShowModal;
+        finally
+          FrmLov.Free;
+        end;
+
+      end;
+    end;
   finally
-    FormLOV.Free;
+    Connect.Free;
   end;
 
+ end;
 
-end;
-
-procedure TForm1.HandleLOVResult(const Value: string);
+procedure TForm1.HandleLOVResult(const Value: TStringList);
 begin
   // Disini Anda dapat menggunakan nilai yang dipilih dari LOV
-  ShowMessage('Nilai yang dipilih: ' + Value);
+  ShowMessage('Nilai yang dipilih: ' + Value[1]);
 end;
+
 
 { TForm1 }
 
