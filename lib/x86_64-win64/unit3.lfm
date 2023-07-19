@@ -1,17 +1,17 @@
 object Form1: TForm1
   Left = -11
-  Height = 893
+  Height = 1061
   Top = -11
-  Width = 1209
+  Width = 1275
   Caption = 'Form1'
-  ClientHeight = 859
-  ClientWidth = 1209
+  ClientHeight = 1027
+  ClientWidth = 1275
   DesignTimePPI = 144
   WindowState = wsMaximized
   object Button3: TButton
-    Left = 111
+    Left = 126
     Height = 38
-    Top = 75
+    Top = 93
     Width = 368
     Anchors = []
     Caption = 'Button3'
@@ -19,9 +19,9 @@ object Form1: TForm1
     TabOrder = 0
   end
   object Button1: TButton
-    Left = 116
+    Left = 131
     Height = 38
-    Top = 140
+    Top = 170
     Width = 356
     Anchors = []
     Caption = 'Button1'

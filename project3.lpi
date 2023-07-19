@@ -58,8 +58,19 @@
         <Filename Value="..\LIB\ulov.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FrmLov"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ULov"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\LIB\usetvarglobal.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uSetVarGlobal"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\LIB\libstring.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Libstring"/>
       </Unit>
     </Units>
   </ProjectOptions>

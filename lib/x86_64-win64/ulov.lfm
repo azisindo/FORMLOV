@@ -7,6 +7,7 @@ object FrmLov: TFrmLov
   ClientHeight = 625
   ClientWidth = 617
   DesignTimePPI = 144
+  OnShow = FormShow
   object PnlAtas: TPanel
     Left = 0
     Height = 50
@@ -31,6 +32,9 @@ object FrmLov: TFrmLov
         Height = 33
         Top = 8
         Width = 452
+        OnExit = EdCariLovExit
+        OnKeyDown = EdCariLovKeyDown
+        OnKeyPress = EdCariLovKeyPress
         TabOrder = 0
       end
     end
@@ -81,7 +85,7 @@ object FrmLov: TFrmLov
       Color = clWindow
       Columns = <>
       TabOrder = 0
-      OnDblClick = DbgLovDblClick
+      OnKeyDown = DbgLovKeyDown
     end
   end
 end

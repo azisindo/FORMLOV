@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBGrids,
-  StdCtrls,uconnect,Db,ZDataset;
+  StdCtrls,uconnect,Db,ZDataset,uSetVarGlobal;
 
 type
 
@@ -62,7 +62,7 @@ var
 
   Connect:Tconnect;
   SqlLov :TZQuery;
-  //uses uconnect,Db,ZDataset;
+  //uses uconnect,Db,ZDataset,uSetVarGlobal;
 
 begin
   Connect := TConnect.Create();
@@ -70,7 +70,7 @@ begin
     if Connect.Connect then
     begin
       //Sql Query
-      SqlLov :=Connect.ExecuteQuery('Select * from hrms.ms_forms');
+      SqlLov :=Connect.ExecuteQuery('Select * from '+SetVarGlobal.Db1+'ms_forms');
       //seting untuk nama kolom
 
       if SqlLov<> Nil then
@@ -86,7 +86,7 @@ begin
           FrmLov.Caption:='Lov Master Barang';
           FrmLov.Left := ButtonPos.X;
           FrmLov.Top  := ButtonPos.Y + Button3.Height;
-          FrmLov.LoadDataToDbGrid(Connect.DataSource);
+//          FrmLov.LoadDataToDbGrid(Connect.DataSource);
           FrmLov.OnSelectValues := @HandleLOVResult;
           FrmLov.ShowModal;
         finally
@@ -104,43 +104,24 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   FrmLov:TFrmLov;
   ButtonPos: TPoint;
-
-  Connect:Tconnect;
-  SqlLov :TZQuery;
-  //uses uconnect,Db,ZDataset;
-
+  vSqlForms:string;
+  //uses uconnect,Db,ZDataset,uSetVarGlobal;
 begin
-  Connect := TConnect.Create();
+  ButtonPos := Button1.ClientToScreen(Point(0, 0));
+  FrmLov    := TFrmLov.Create(Self);
   try
-    if Connect.Connect then
-    begin
-      //Sql Query
-      SqlLov :=Connect.ExecuteQuery('Select * from hrms.ms_forms');
-      //seting untuk nama kolom
+    //Judul LOV
+    vSqlForms :='Select * from '+SetVarGlobal.Db1  +'.ms_forms ';
 
-      if SqlLov<> Nil then
-      begin
-        //Menngunakan TDataSource yang telah ditambahkan
-        Connect.DataSource.DataSet := SqlLov ;
-
-        ButtonPos := Button1.ClientToScreen(Point(0, 0));
-        FrmLov    := TFrmLov.Create(Self);
-
-        try
-          //Judul LOV
-          FrmLov.Caption:='Lov Master Barang';
-          FrmLov.Left := ButtonPos.X;
-          FrmLov.Top  := ButtonPos.Y + Button3.Height;
-          FrmLov.LoadDataToDbGrid(Connect.DataSource);
-          FrmLov.OnSelectValues := @HandleLOVResult;
-          FrmLov.ShowModal;
-        finally
-          FrmLov.Free;
-        end;
-      end;
-    end;
+    FrmLov.Caption :='Lov Master Barang';
+    FrmLov.SqlLov  := vSqlForms;
+    FrmLov.SetJudulLov :='master';
+    FrmLov.Left    := ButtonPos.X;
+    FrmLov.Top     := ButtonPos.Y + Button3.Height;
+    FrmLov.OnSelectValues := @HandleLOVResult;
+    FrmLov.ShowModal;
   finally
-    Connect.Free;
+    FrmLov.Free;
   end;
 
  end;
