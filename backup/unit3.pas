@@ -20,7 +20,10 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Edit1Enter(Sender: TObject);
     procedure HandleLOVResult(const Value: TStringList);
+
   private
+
+
   public
   end;
 
@@ -87,7 +90,7 @@ begin
           FrmLov.Left := ButtonPos.X;
           FrmLov.Top  := ButtonPos.Y + Button3.Height;
 //          FrmLov.LoadDataToDbGrid(Connect.DataSource);
-          FrmLov.OnSelectValues := @HandleLOVResult;
+         // FrmLov.OnSelectValues := @HandleLOVResult;
           FrmLov.ShowModal;
         finally
           FrmLov.Free;
@@ -105,21 +108,23 @@ var
   FrmLov:TFrmLov;
   ButtonPos: TPoint;
   vSqlForms:string;
-  //uses uconnect,Db,ZDataset;
+  LValues: TStringList;
+  //uses uconnect,Db,ZDataset,uSetVarGlobal;
 begin
   ButtonPos := Button1.ClientToScreen(Point(0, 0));
   FrmLov    := TFrmLov.Create(Self);
   try
     //Judul LOV
-    vSqlForms :='Select * from '+SetVarGlobal.Db1  +'.ms_forms ';
+    vSqlForms :='Select msf_id,ms_descp from '+SetVarGlobal.Db1  +'.ms_forms ';
 
     FrmLov.Caption :='Lov Master Barang';
     FrmLov.SqlLov  := vSqlForms;
-    FrmLov.SetJudulLov :='master';
+    FrmLov.SetJudulLov :='Judul Lov;Id Forms;150;L;Desc;300;L';
     FrmLov.Left    := ButtonPos.X;
     FrmLov.Top     := ButtonPos.Y + Button3.Height;
-    FrmLov.OnSelectValues := @HandleLOVResult;
     FrmLov.ShowModal;
+    LValues:=FrmLov.LovSelectedValues;
+    ShowMessage(LValues[0]+' '+LValues[1]);
   finally
     FrmLov.Free;
   end;
@@ -128,9 +133,7 @@ begin
 
 procedure TForm1.HandleLOVResult(const Value: TStringList);
 begin
-  // Disini Anda dapat menggunakan nilai yang dipilih dari LOV
-  ShowMessage('Nilai yang dipilih: ' + Value[0]);
-  edit1.Caption:=Value[0];
+ ShowMessage(Value[0]);
 end;
 
 
